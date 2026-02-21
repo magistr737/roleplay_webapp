@@ -4,12 +4,41 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/bundle/robokassa_iframe.js"></script>
+    <!-- <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/bundle/robokassa_iframe.js"></script> -->
     <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
     <title>webapp-roleplay</title>
-    <script type="module" crossorigin src="/assets/index-Bw6t7oDs.js"></script>
+    <script>
+      (function () {
+        var devtools = { open: false };
+        var detector = /./;
+        detector.toString = function () {
+          devtools.open = true;
+          return '';
+        };
+
+        var alreadyLogged = false;
+
+        setInterval(function () {
+          devtools.open = false;
+          console.log('%c', detector);
+          setTimeout(function () {
+            if (devtools.open && !alreadyLogged) {
+              alreadyLogged = true;
+              console.log(
+                '%c Если ты сюда залез — то зачем?\n А главный вопрос... нахуя? 🤨',
+                'color: red; font-size: 16px; font-weight: bold;'
+              );
+            }
+            if (!devtools.open) {
+              alreadyLogged = false;
+            }
+          }, 0);
+        }, 1000);
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-51Rlmhmf.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-react-Clb4NWHV.js">
-    <link rel="modulepreload" crossorigin href="/assets/vendor-mantine-B9refIwV.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-mantine-BOlVZ7Ex.js">
     <link rel="stylesheet" crossorigin href="/assets/index-DlAmmr0N.css">
   </head>
   <body>
