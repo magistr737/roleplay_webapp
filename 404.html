@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — Страница потерялась</title>
+
+  <!-- GitHub Pages SPA routing fix. -->
+  <script>
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      '/?/' +
+      l.pathname.slice(1).replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #07060f;
+      --surface:   #110f1e;
+      --border:    rgba(139, 92, 246, 0.18);
+      --violet:    #7c3aed;
+      --lavender:  #a78bfa;
+      --pink:      #e879f9;
+      --text:      #ede9fe;
+      --muted:     #7c7a96;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Golos Text', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Stars ─────────────────────────────────────────── */
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--dur) ease-in-out infinite var(--delay);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--lo); transform: scale(1); }
+      50%       { opacity: var(--hi); transform: scale(1.6); }
+    }
+
+    /* ── Orbs ───────────────────────────────────────────── */
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #5b21b6aa 0%, transparent 70%);
+      top: -120px; left: -100px;
+      animation: drift1 14s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, #a21caf88 0%, transparent 70%);
+      bottom: -80px; right: -60px;
+      animation: drift2 11s ease-in-out infinite;
+    }
+    @keyframes drift1 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(40px, 60px); }
+    }
+    @keyframes drift2 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(-30px,-40px); }
+    }
+
+    /* ── Layout ─────────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 20px;
+      text-align: center;
+      gap: 0;
+    }
+
+    /* ── 404 glitch number ───────────────────────────────── */
+    .error-code {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(96px, 22vw, 200px);
+      line-height: 1;
+      letter-spacing: -4px;
+      color: transparent;
+      background: linear-gradient(135deg, var(--lavender) 0%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      position: relative;
+      animation: fadeUp 0.7s ease both;
+      filter: drop-shadow(0 0 40px rgba(167,139,250,0.35));
+    }
+    .error-code::before,
+    .error-code::after {
+      content: '404';
+      position: absolute; inset: 0;
+      font-family: inherit; font-weight: inherit; font-size: inherit;
+      letter-spacing: inherit; line-height: inherit;
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .error-code::before {
+      background: linear-gradient(135deg, #f0abfc 0%, #818cf8 100%);
+      color: transparent;
+      clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%);
+      animation: glitch-top 3.5s steps(1) infinite;
+    }
+    .error-code::after {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--violet) 100%);
+      color: transparent;
+      clip-path: polygon(0 65%, 100% 65%, 100% 72%, 0 72%);
+      animation: glitch-bot 3.5s steps(1) infinite 0.6s;
+    }
+    @keyframes glitch-top {
+      0%,90%,100% { transform: translate(0,0); opacity: 0; }
+      91%          { transform: translate(-4px, -2px); opacity: 1; }
+      93%          { transform: translate(4px, 2px);  opacity: 1; }
+      95%          { transform: translate(0,0); opacity: 0; }
+    }
+    @keyframes glitch-bot {
+      0%,88%,100% { transform: translate(0,0); opacity: 0; }
+      89%          { transform: translate(3px, 1px);  opacity: 1; }
+      91%          { transform: translate(-3px,-1px); opacity: 1; }
+      93%          { transform: translate(0,0); opacity: 0; }
+    }
+
+    /* ── Capybara ───────────────────────────────────────── */
+    .capy {
+      font-size: clamp(56px, 12vw, 90px);
+      line-height: 1;
+      animation: float 4s ease-in-out infinite, fadeUp 0.7s 0.1s ease both;
+      display: block;
+      margin: 8px 0 4px;
+      filter: drop-shadow(0 8px 24px rgba(167,139,250,0.3));
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    /* ── Headline ───────────────────────────────────────── */
+    .headline {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: clamp(18px, 4vw, 28px);
+      color: var(--text);
+      margin-top: 12px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    /* ── Roleplay bubble ────────────────────────────────── */
+    .rp-bubble {
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      max-width: 480px;
+      width: 100%;
+      animation: fadeUp 0.7s 0.35s ease both;
+      position: relative;
+    }
+    .rp-bubble::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(232,121,249,0.2), transparent);
+      z-index: -1;
+    }
+    .rp-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lavender);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rp-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--lavender);
+      display: inline-block;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow: 0 0 0 0 rgba(167,139,250,0.6); }
+      50%      { box-shadow: 0 0 0 5px rgba(167,139,250,0); }
+    }
+    .rp-action {
+      font-style: italic;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .rp-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .rp-text em {
+      font-style: normal;
+      color: var(--lavender);
+    }
+
+    /* ── Divider ────────────────────────────────────────── */
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--violet), var(--pink));
+      border-radius: 2px;
+      margin: 24px auto 0;
+      animation: fadeUp 0.7s 0.45s ease both;
+    }
+
+    /* ── Buttons ────────────────────────────────────────── */
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-family: 'Golos Text', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+    .btn:active { transform: scale(0.96) !important; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet) 0%, #9333ea 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(124,58,237,0.55);
+      filter: brightness(1.1);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(139,92,246,0.25);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      color: var(--lavender);
+      border-color: rgba(167,139,250,0.5);
+      background: rgba(124,58,237,0.08);
+    }
+
+    /* ── Footer note ────────────────────────────────────── */
+    .footnote {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--muted);
+      animation: fadeUp 0.7s 0.6s ease both;
+    }
+    .footnote span {
+      color: var(--lavender);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- background orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- star field -->
+  <div class="stars" id="stars"></div>
+
+  <div class="page">
+    <div class="error-code">404</div>
+
+    <span class="capy">🦫</span>
+
+    <h1 class="headline">Страница потерялась в сюжете</h1>
+
+    <div class="rp-bubble">
+      <div class="rp-label">Мастер игры говорит</div>
+      <p class="rp-action">*листает книгу правил в поисках этой страницы*</p>
+      <p class="rp-text">
+        Хм. Судя по всему, этот путь <em>ещё не написан.</em><br />
+        Либо персонаж, который сюда вёл, сбежал с другим игроком.<br />
+        Такое бывает — возвращайся на главную, там все свои. 🎲
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="actions">
+      <a href="/" class="btn btn-primary">
+        ✦ На главную
+      </a>
+      <a href="https://t.me/aiogram_tgbots" target="_blank" rel="noopener" class="btn btn-ghost">
+        Написать в поддержку
+      </a>
+    </div>
+
+    <p class="footnote">код ошибки <span>404</span> · capyhub roleplay</p>
+  </div>
+
+  <script>
+    // Generate twinkling stars
+    var container = document.getElementById('stars');
+    for (var i = 0; i < 80; i++) {
+      var s = document.createElement('div');
+      s.className = 'star';
+      var size = Math.random() * 2 + 1;
+      s.style.cssText = [
+        'width:'  + size + 'px',
+        'height:' + size + 'px',
+        'left:'   + Math.random() * 100 + '%',
+        'top:'    + Math.random() * 100 + '%',
+        '--dur:'   + (3 + Math.random() * 5) + 's',
+        '--delay:' + -(Math.random() * 6) + 's',
+        '--lo:'    + (0.05 + Math.random() * 0.15),
+        '--hi:'    + (0.4 + Math.random() * 0.5),
+        'opacity:' + 0.1,
+      ].join(';');
+      container.appendChild(s);
+    }
+  </script>
+
+</body>
+</html>
